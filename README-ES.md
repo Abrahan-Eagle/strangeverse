@@ -41,20 +41,20 @@ Ejecute la pila localmente (consulte **Inicio rápido** a continuación) o con D
 ## 📸 Capturas de pantalla
 
 <div align="center">
-<tabla>
+<table>
 <tr>
-<td><img src="./static/image/Screenshot/运行截图1.png" alt="Captura de pantalla 1" width="100%"/></td>
-<td><img src="./static/image/Screenshot/运行截图2.png" alt="Captura de pantalla 2" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-1.png" alt="Captura de pantalla 1" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-2.png" alt="Captura de pantalla 2" width="100%"/></td>
 </tr>
 <tr>
-<td><img src="./static/image/Screenshot/运行截图3.png" alt="Captura de pantalla 3" width="100%"/></td>
-<td><img src="./static/image/Screenshot/运行截图4.png" alt="Captura de pantalla 4" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-3.png" alt="Captura de pantalla 3" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-4.png" alt="Captura de pantalla 4" width="100%"/></td>
 </tr>
 <tr>
-<td><img src="./static/image/Screenshot/运行截图5.png" alt="Captura de pantalla 5" width="100%"/></td>
-<td><img src="./static/image/Screenshot/运行截图6.png" alt="Captura de pantalla 6" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-5.png" alt="Captura de pantalla 5" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-6.png" alt="Captura de pantalla 6" width="100%"/></td>
 </tr>
-</tabla>
+</table>
 </div>
 
 ## 🎬 Vídeos de demostración
@@ -62,7 +62,7 @@ Ejecute la pila localmente (consulte **Inicio rápido** a continuación) o con D
 ### 1. Simulación de opinión pública de la Universidad de Wuhan + Introducción al proyecto StrangeVerse
 
 <div align="center">
-<a href="https://www.bilibili.com/video/BV1VYBsBHEMY/" target="_blank"><img src="./static/image/武大模拟演示封面.png" alt="Video de demostración de StrangeVerse" width="75%"/></a>
+<a href="https://www.bilibili.com/video/BV1VYBsBHEMY/" target="_blank"><img src="./static/image/demo-wuhan-cover.png" alt="Video de demostración de StrangeVerse" width="75%"/></a>
 
 Haga clic en la imagen para ver el vídeo de demostración completo para realizar predicciones utilizando el "Informe de opinión pública de la Universidad de Wuhan" generado por BettaFish.
 </div>
@@ -70,7 +70,7 @@ Haga clic en la imagen para ver el vídeo de demostración completo para realiza
 ### 2. Simulación del final perdido del Sueño de la Cámara Roja
 
 <div align="center">
-<a href="https://www.bilibili.com/video/BV1cPk3BBExq" target="_blank"><img src="./static/image/红楼梦模拟推演封面.jpg" alt="Video de demostración de StrangeVerse" width="75%"/></a>
+<a href="https://www.bilibili.com/video/BV1cPk3BBExq" target="_blank"><img src="./static/image/demo-red-chamber-cover.jpg" alt="Video de demostración de StrangeVerse" width="75%"/></a>
 
 Haga clic en la imagen para ver la profunda predicción de StrangeVerse sobre el final perdido basada en cientos de miles de palabras de los primeros 80 capítulos de "Dream of the Red Chamber".
 </div>
@@ -170,7 +170,7 @@ Lee `.env` desde el directorio raíz de forma predeterminada, asigna los puertos
 ## 📬 Únase a la conversación
 
 <div align="center">
-<img src="./static/image/QQ群.png" alt="Grupo QQ" width="60%"/>
+<img src="./static/image/qq-group.png" alt="Grupo QQ" width="60%"/>
 </div>
 
 &nbsp;

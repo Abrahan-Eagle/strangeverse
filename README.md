@@ -44,16 +44,16 @@ Run the stack locally (see **Quick Start** below) or with Docker for the full ex
 <div align="center">
 <table>
 <tr>
-<td><img src="./static/image/Screenshot/运行截图1.png" alt="Screenshot 1" width="100%"/></td>
-<td><img src="./static/image/Screenshot/运行截图2.png" alt="Screenshot 2" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-1.png" alt="Screenshot 1" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-2.png" alt="Screenshot 2" width="100%"/></td>
 </tr>
 <tr>
-<td><img src="./static/image/Screenshot/运行截图3.png" alt="Screenshot 3" width="100%"/></td>
-<td><img src="./static/image/Screenshot/运行截图4.png" alt="Screenshot 4" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-3.png" alt="Screenshot 3" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-4.png" alt="Screenshot 4" width="100%"/></td>
 </tr>
 <tr>
-<td><img src="./static/image/Screenshot/运行截图5.png" alt="Screenshot 5" width="100%"/></td>
-<td><img src="./static/image/Screenshot/运行截图6.png" alt="Screenshot 6" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-5.png" alt="Screenshot 5" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-6.png" alt="Screenshot 6" width="100%"/></td>
 </tr>
 </table>
 </div>
@@ -63,7 +63,7 @@ Run the stack locally (see **Quick Start** below) or with Docker for the full ex
 ### 1. Wuhan University Public Opinion Simulation + StrangeVerse Project Introduction
 
 <div align="center">
-<a href="https://www.bilibili.com/video/BV1VYBsBHEMY/" target="_blank"><img src="./static/image/武大模拟演示封面.png" alt="StrangeVerse Demo Video" width="75%"/></a>
+<a href="https://www.bilibili.com/video/BV1VYBsBHEMY/" target="_blank"><img src="./static/image/demo-wuhan-cover.png" alt="StrangeVerse Demo Video" width="75%"/></a>
 
 Click the image to watch the complete demo video for prediction using BettaFish-generated "Wuhan University Public Opinion Report"
 </div>
@@ -71,7 +71,7 @@ Click the image to watch the complete demo video for prediction using BettaFish-
 ### 2. Dream of the Red Chamber Lost Ending Simulation
 
 <div align="center">
-<a href="https://www.bilibili.com/video/BV1cPk3BBExq" target="_blank"><img src="./static/image/红楼梦模拟推演封面.jpg" alt="StrangeVerse Demo Video" width="75%"/></a>
+<a href="https://www.bilibili.com/video/BV1cPk3BBExq" target="_blank"><img src="./static/image/demo-red-chamber-cover.jpg" alt="StrangeVerse Demo Video" width="75%"/></a>
 
 Click the image to watch StrangeVerse's deep prediction of the lost ending based on hundreds of thousands of words from the first 80 chapters of "Dream of the Red Chamber"
 </div>
@@ -174,7 +174,7 @@ Reads `.env` from root directory by default, maps ports `3000 (frontend) / 5001 
 ## 📬 Join the Conversation
 
 <div align="center">
-<img src="./static/image/QQ群.png" alt="QQ Group" width="60%"/>
+<img src="./static/image/qq-group.png" alt="QQ Group" width="60%"/>
 </div>
 
 &nbsp;
