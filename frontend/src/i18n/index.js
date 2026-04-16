@@ -14,12 +14,17 @@ for (const path in localeFiles) {
   }
 }
 
-const savedLocale = localStorage.getItem('locale') || 'zh'
+const allowed = new Set(Object.keys(messages))
+let savedLocale = localStorage.getItem('locale') || 'es'
+if (!allowed.has(savedLocale)) {
+  savedLocale = 'es'
+  localStorage.setItem('locale', 'es')
+}
 
 const i18n = createI18n({
   legacy: false,
   locale: savedLocale,
-  fallbackLocale: 'zh',
+  fallbackLocale: 'en',
   messages
 })
 

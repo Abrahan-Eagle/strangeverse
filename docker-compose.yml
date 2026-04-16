@@ -1,7 +1,7 @@
 services:
   strangeverse:
     image: ghcr.io/abrahan-eagle/strangeverse:latest
-    # 加速镜像（如拉取缓慢可替换上方地址）
+    # Mirror (optional) if pulls are slow:
     # image: ghcr.nju.edu.cn/abrahan-eagle/strangeverse:latest
     container_name: strangeverse
     env_file:

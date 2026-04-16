@@ -437,7 +437,7 @@ const showToolsDetail = ref(true)
 // Chat State
 const chatInput = ref('')
 const chatHistory = ref([])
-const chatHistoryCache = ref({}) // 缓存所有对话记录: { 'report_agent': [], 'agent_0': [], 'agent_1': [], ... }
+const chatHistoryCache = ref({}) 
 const isSending = ref(false)
 const chatMessages = ref(null)
 const chatInputRef = ref(null)
@@ -487,7 +487,7 @@ const selectChatTarget = (target) => {
   }
 }
 
-// 保存当前对话记录到缓存
+
 const saveChatHistory = () => {
   if (chatHistory.value.length === 0) return
   
@@ -499,7 +499,7 @@ const saveChatHistory = () => {
 }
 
 const selectReportAgentChat = () => {
-  // 保存当前对话记录
+  
   saveChatHistory()
   
   activeTab.value = 'chat'
@@ -508,7 +508,7 @@ const selectReportAgentChat = () => {
   selectedAgentIndex.value = null
   showAgentDropdown.value = false
   
-  // 恢复 Report Agent 的对话记录
+  
   chatHistory.value = chatHistoryCache.value['report_agent'] || []
 }
 
@@ -528,7 +528,7 @@ const toggleAgentDropdown = () => {
 }
 
 const selectAgent = (agent, idx) => {
-  // 保存当前对话记录
+  
   saveChatHistory()
   
   selectedAgent.value = agent
@@ -536,7 +536,7 @@ const selectAgent = (agent, idx) => {
   chatTarget.value = 'agent'
   showAgentDropdown.value = false
   
-  // 恢复该 Agent 的对话记录
+  
   chatHistory.value = chatHistoryCache.value[`agent_${idx}`] || []
   addLog(t('log.selectChatTarget', { name: agent.username }))
 }
@@ -566,7 +566,7 @@ const renderMarkdown = (content) => {
   html = html.replace(/^# (.+)$/gm, '<h2 class="md-h2">$1</h2>')
   html = html.replace(/^> (.+)$/gm, '<blockquote class="md-quote">$1</blockquote>')
   
-  // 处理列表 - 支持子列表
+  
   html = html.replace(/^(\s*)- (.+)$/gm, (match, indent, text) => {
     const level = Math.floor(indent.length / 2)
     return `<li class="md-li" data-level="${level}">${text}</li>`
@@ -576,17 +576,17 @@ const renderMarkdown = (content) => {
     return `<li class="md-oli" data-level="${level}">${text}</li>`
   })
   
-  // 包装无序列表
+  
   html = html.replace(/(<li class="md-li"[^>]*>.*?<\/li>\s*)+/g, '<ul class="md-ul">$&</ul>')
-  // 包装有序列表
+  
   html = html.replace(/(<li class="md-oli"[^>]*>.*?<\/li>\s*)+/g, '<ol class="md-ol">$&</ol>')
   
-  // 清理列表项之间的所有空白
+  
   html = html.replace(/<\/li>\s+<li/g, '</li><li')
-  // 清理列表开始标签后的空白
+  
   html = html.replace(/<ul class="md-ul">\s+/g, '<ul class="md-ul">')
   html = html.replace(/<ol class="md-ol">\s+/g, '<ol class="md-ol">')
-  // 清理列表结束标签前的空白
+  
   html = html.replace(/\s+<\/ul>/g, '</ul>')
   html = html.replace(/\s+<\/ol>/g, '</ol>')
   
@@ -602,17 +602,17 @@ const renderMarkdown = (content) => {
   html = html.replace(/(<\/h[2-5]>)<\/p>/g, '$1')
   html = html.replace(/<p class="md-p">(<ul|<ol|<blockquote|<pre|<hr)/g, '$1')
   html = html.replace(/(<\/ul>|<\/ol>|<\/blockquote>|<\/pre>)<\/p>/g, '$1')
-  // 清理块级元素前后的 <br> 标签
+  
   html = html.replace(/<br>\s*(<ul|<ol|<blockquote)/g, '$1')
   html = html.replace(/(<\/ul>|<\/ol>|<\/blockquote>)\s*<br>/g, '$1')
-  // 清理 <p><br> 紧跟块级元素的情况（多余空行导致）
+  
   html = html.replace(/<p class="md-p">(<br>\s*)+(<ul|<ol|<blockquote|<pre|<hr)/g, '$2')
-  // 清理连续的 <br> 标签
+  
   html = html.replace(/(<br>\s*){2,}/g, '<br>')
-  // 清理块级元素后紧跟的段落开始标签前的 <br>
+  
   html = html.replace(/(<\/ol>|<\/ul>|<\/blockquote>)<br>(<p|<div)/g, '$1$2')
 
-  // 修复非连续有序列表的编号：当单项 <ol> 被段落内容隔开时，保持编号递增
+  
   const tokens = html.split(/(<ol class="md-ol">(?:<li class="md-oli"[^>]*>[\s\S]*?<\/li>)+<\/ol>)/g)
   let olCounter = 0
   let inSequence = false
@@ -674,7 +674,7 @@ const sendMessage = async () => {
   } finally {
     isSending.value = false
     scrollToBottom()
-    // 自动保存对话记录到缓存
+    
     saveChatHistory()
   }
 }
@@ -722,9 +722,9 @@ const sendToAgent = async (message) => {
     const historyContext = chatHistory.value
       .filter(msg => msg.content !== message)
       .slice(-6)
-      .map(msg => `${msg.role === 'user' ? '提问者' : '你'}：${msg.content}`)
+      .map(msg => `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}`)
       .join('\n')
-    prompt = `以下是我们之前的对话：\n${historyContext}\n\n现在我的新问题是：${message}`
+    prompt = `Previous conversation:\n${historyContext}\n\nNew question: ${message}`
   }
   
   const res = await interviewAgents({
@@ -736,17 +736,17 @@ const sendToAgent = async (message) => {
   })
   
   if (res.success && res.data) {
-    // 正确的数据路径: res.data.result.results 是一个对象字典
-    // 格式: {"twitter_0": {...}, "reddit_0": {...}} 或单平台 {"reddit_0": {...}}
+    
+    
     const resultData = res.data.result || res.data
     const resultsDict = resultData.results || resultData
     
-    // 将对象字典转换为数组，优先获取 reddit 平台的回复
+    
     let responseContent = null
     const agentId = selectedAgentIndex.value
     
     if (typeof resultsDict === 'object' && !Array.isArray(resultsDict)) {
-      // 优先使用 reddit 平台回复，其次 twitter
+      
       const redditKey = `reddit_${agentId}`
       const twitterKey = `twitter_${agentId}`
       const agentResult = resultsDict[redditKey] || resultsDict[twitterKey] || Object.values(resultsDict)[0]
@@ -754,7 +754,7 @@ const sendToAgent = async (message) => {
         responseContent = agentResult.response || agentResult.answer
       }
     } else if (Array.isArray(resultsDict) && resultsDict.length > 0) {
-      // 兼容数组格式
+      
       responseContent = resultsDict[0].response || resultsDict[0].answer
     }
     
@@ -820,19 +820,19 @@ const submitSurvey = async () => {
     })
     
     if (res.success && res.data) {
-      // 正确的数据路径: res.data.result.results 是一个对象字典
-      // 格式: {"twitter_0": {...}, "reddit_0": {...}, "twitter_1": {...}, ...}
+      
+      
       const resultData = res.data.result || res.data
       const resultsDict = resultData.results || resultData
       
-      // 将对象字典转换为数组格式
+      
       const surveyResultsList = []
       
       for (const interview of interviews) {
         const agentIdx = interview.agent_id
         const agent = profiles.value[agentIdx]
         
-        // 优先使用 reddit 平台回复，其次 twitter
+        
         let responseContent = t('step5.noResponse')
 
         if (typeof resultsDict === 'object' && !Array.isArray(resultsDict)) {
@@ -843,7 +843,7 @@ const submitSurvey = async () => {
             responseContent = agentResult.response || agentResult.answer || t('step5.noResponse')
           }
         } else if (Array.isArray(resultsDict)) {
-          // 兼容数组格式
+          
           const matchedResult = resultsDict.find(r => r.agent_id === agentIdx)
           if (matchedResult) {
             responseContent = matchedResult.response || matchedResult.answer || t('step5.noResponse')
@@ -971,19 +971,7 @@ watch(() => props.simulationId, (newId) => {
   overflow: hidden;
 }
 
-/* Utility Classes */
-.mono {
-  font-family: 'JetBrains Mono', 'SF Mono', 'Monaco', 'Consolas', monospace;
-}
 
-/* Main Split Layout */
-.main-split-layout {
-  flex: 1;
-  display: flex;
-  overflow: hidden;
-}
-
-/* Left Panel - Report Style (与 Step4Report.vue 完全一致) */
 .left-panel.report-style {
   width: 45%;
   min-width: 450px;
@@ -1017,1021 +1005,7 @@ watch(() => props.simulationId, (newId) => {
   background: rgba(0, 0, 0, 0.25);
 }
 
-/* Report Header */
-.report-content-wrapper {
-  max-width: 800px;
-  margin: 0 auto;
-  width: 100%;
-}
 
-.report-header-block {
-  margin-bottom: 30px;
-}
-
-.report-meta {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
-}
-
-.report-tag {
-  background: #000000;
-  color: #FFFFFF;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 8px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.report-id {
-  font-size: 11px;
-  color: #9CA3AF;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-}
-
-.main-title {
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 36px;
-  font-weight: 700;
-  color: #111827;
-  line-height: 1.2;
-  margin: 0 0 16px 0;
-  letter-spacing: -0.02em;
-}
-
-.sub-title {
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 16px;
-  color: #6B7280;
-  font-style: italic;
-  line-height: 1.6;
-  margin: 0 0 30px 0;
-  font-weight: 400;
-}
-
-.header-divider {
-  height: 1px;
-  background: #E5E7EB;
-  width: 100%;
-}
-
-/* Sections List */
-.sections-list {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-.report-section-item {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.section-header-row {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  transition: background-color 0.2s ease;
-  padding: 8px 12px;
-  margin: -8px -12px;
-  border-radius: 8px;
-}
-
-.section-header-row.clickable {
-  cursor: pointer;
-}
-
-.section-header-row.clickable:hover {
-  background-color: #F9FAFB;
-}
-
-.collapse-icon {
-  margin-left: auto;
-  color: #9CA3AF;
-  transition: transform 0.3s ease;
-  flex-shrink: 0;
-  align-self: center;
-}
-
-.collapse-icon.is-collapsed {
-  transform: rotate(-90deg);
-}
-
-.section-number {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
-  color: #E5E7EB;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.section-title {
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 24px;
-  font-weight: 600;
-  color: #111827;
-  margin: 0;
-  transition: color 0.3s ease;
-}
-
-/* States */
-.report-section-item.is-pending .section-number {
-  color: #E5E7EB;
-}
-.report-section-item.is-pending .section-title {
-  color: #D1D5DB;
-}
-
-.report-section-item.is-active .section-number,
-.report-section-item.is-completed .section-number {
-  color: #9CA3AF;
-}
-
-.report-section-item.is-active .section-title,
-.report-section-item.is-completed .section-title {
-  color: #111827;
-}
-
-.section-body {
-  padding-left: 28px;
-  overflow: hidden;
-}
-
-/* Generated Content */
-.generated-content {
-  font-family: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
-  font-size: 14px;
-  line-height: 1.8;
-  color: #374151;
-}
-
-.generated-content :deep(p) {
-  margin-bottom: 1em;
-}
-
-.generated-content :deep(.md-h2),
-.generated-content :deep(.md-h3),
-.generated-content :deep(.md-h4) {
-  font-family: 'Times New Roman', Times, serif;
-  color: #111827;
-  margin-top: 1.5em;
-  margin-bottom: 0.8em;
-  font-weight: 700;
-}
-
-.generated-content :deep(.md-h2) { font-size: 20px; border-bottom: 1px solid #F3F4F6; padding-bottom: 8px; }
-.generated-content :deep(.md-h3) { font-size: 18px; }
-.generated-content :deep(.md-h4) { font-size: 16px; }
-
-.generated-content :deep(.md-ul),
-.generated-content :deep(.md-ol) {
-  padding-left: 20px;
-  margin-bottom: 1em;
-}
-
-.generated-content :deep(.md-li) {
-  margin-bottom: 0.5em;
-}
-
-.generated-content :deep(.md-quote) {
-  border-left: 3px solid #E5E7EB;
-  padding-left: 16px;
-  margin: 1.5em 0;
-  color: #6B7280;
-  font-style: italic;
-  font-family: 'Times New Roman', Times, serif;
-}
-
-.generated-content :deep(.code-block) {
-  background: #F9FAFB;
-  padding: 12px;
-  border-radius: 6px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  overflow-x: auto;
-  margin: 1em 0;
-  border: 1px solid #E5E7EB;
-}
-
-.generated-content :deep(strong) {
-  font-weight: 600;
-  color: #111827;
-}
-
-/* Loading State */
-.loading-state {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #6B7280;
-  font-size: 14px;
-  margin-top: 4px;
-}
-
-.loading-icon {
-  width: 18px;
-  height: 18px;
-  animation: spin 1s linear infinite;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.loading-text {
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 15px;
-  color: #4B5563;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Content Styles Override */
-.generated-content :deep(.md-h2) {
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 18px;
-  margin-top: 0;
-}
-
-/* Waiting Placeholder */
-.waiting-placeholder {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  padding: 40px;
-  color: #9CA3AF;
-}
-
-.waiting-animation {
-  position: relative;
-  width: 48px;
-  height: 48px;
-}
-
-.waiting-ring {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 2px solid #E5E7EB;
-  border-radius: 50%;
-  animation: ripple 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-.waiting-ring:nth-child(2) {
-  animation-delay: 0.4s;
-}
-
-.waiting-ring:nth-child(3) {
-  animation-delay: 0.8s;
-}
-
-@keyframes ripple {
-  0% { transform: scale(0.5); opacity: 1; }
-  100% { transform: scale(2); opacity: 0; }
-}
-
-.waiting-text {
-  font-size: 14px;
-}
-
-/* Right Panel - Interaction */
-.right-panel {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background: #FFFFFF;
-  overflow: hidden;
-}
-
-/* Action Bar - Professional Design */
-.action-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 20px;
-  border-bottom: 1px solid #E5E7EB;
-  background: linear-gradient(180deg, #FFFFFF 0%, #FAFBFC 100%);
-  gap: 16px;
-}
-
-.action-bar-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 160px;
-}
-
-.action-bar-icon {
-  color: #1F2937;
-  flex-shrink: 0;
-}
-
-.action-bar-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.action-bar-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: #1F2937;
-  letter-spacing: -0.01em;
-}
-
-.action-bar-subtitle {
-  font-size: 11px;
-  color: #9CA3AF;
-}
-
-.action-bar-subtitle.mono {
-  font-family: 'JetBrains Mono', 'SF Mono', monospace;
-}
-
-.action-bar-tabs {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex: 1;
-  justify-content: flex-end;
-}
-
-.tab-pill {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #6B7280;
-  background: #F3F4F6;
-  border: 1px solid transparent;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.tab-pill:hover {
-  background: #E5E7EB;
-  color: #374151;
-}
-
-.tab-pill.active {
-  background: #1F2937;
-  color: #FFFFFF;
-  box-shadow: 0 2px 8px rgba(31, 41, 55, 0.15);
-}
-
-.tab-pill svg {
-  flex-shrink: 0;
-  opacity: 0.7;
-}
-
-.tab-pill.active svg {
-  opacity: 1;
-}
-
-.tab-divider {
-  width: 1px;
-  height: 24px;
-  background: #E5E7EB;
-  margin: 0 6px;
-}
-
-.agent-pill {
-  width: 200px;
-  justify-content: space-between;
-}
-
-.agent-pill span {
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  text-align: left;
-}
-
-.survey-pill {
-  background: #ECFDF5;
-  color: #047857;
-}
-
-.survey-pill:hover {
-  background: #D1FAE5;
-  color: #065F46;
-}
-
-.survey-pill.active {
-  background: #047857;
-  color: #FFFFFF;
-  box-shadow: 0 2px 8px rgba(4, 120, 87, 0.2);
-}
-
-/* Interaction Header */
-.interaction-header {
-  padding: 16px 24px;
-  border-bottom: 1px solid #E5E7EB;
-  background: #FAFAFA;
-}
-
-.tab-switcher {
-  display: flex;
-  gap: 8px;
-}
-
-.tab-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #6B7280;
-  background: transparent;
-  border: 1px solid #E5E7EB;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.tab-btn:hover {
-  background: #F9FAFB;
-  border-color: #D1D5DB;
-}
-
-.tab-btn.active {
-  background: #1F2937;
-  color: #FFFFFF;
-  border-color: #1F2937;
-}
-
-.tab-btn svg {
-  flex-shrink: 0;
-}
-
-/* Chat Container */
-.chat-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-/* Report Agent Tools Card */
-.report-agent-tools-card {
-  border-bottom: 1px solid #E5E7EB;
-  background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
-}
-
-.tools-card-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 20px;
-}
-
-.tools-card-avatar {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  min-height: 44px;
-  background: linear-gradient(135deg, #1F2937 0%, #374151 100%);
-  color: #FFFFFF;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  font-weight: 600;
-  flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(31, 41, 55, 0.2);
-}
-
-.tools-card-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.tools-card-name {
-  font-size: 15px;
-  font-weight: 600;
-  color: #1F2937;
-  margin-bottom: 2px;
-}
-
-.tools-card-subtitle {
-  font-size: 12px;
-  color: #6B7280;
-}
-
-.tools-card-toggle {
-  width: 28px;
-  height: 28px;
-  background: #FFFFFF;
-  border: 1px solid #E5E7EB;
-  border-radius: 6px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #6B7280;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-}
-
-.tools-card-toggle:hover {
-  background: #F9FAFB;
-  border-color: #D1D5DB;
-}
-
-.tools-card-toggle svg {
-  transition: transform 0.3s ease;
-}
-
-.tools-card-toggle svg.is-expanded {
-  transform: rotate(180deg);
-}
-
-.tools-card-body {
-  padding: 0 20px 16px 20px;
-}
-
-.tools-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
-
-.tool-item {
-  display: flex;
-  gap: 10px;
-  padding: 12px;
-  background: #FFFFFF;
-  border-radius: 10px;
-  border: 1px solid #E5E7EB;
-  transition: all 0.2s ease;
-}
-
-.tool-item:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-.tool-icon-wrapper {
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.tool-purple .tool-icon-wrapper {
-  background: rgba(139, 92, 246, 0.1);
-  color: #8B5CF6;
-}
-
-.tool-blue .tool-icon-wrapper {
-  background: rgba(59, 130, 246, 0.1);
-  color: #3B82F6;
-}
-
-.tool-orange .tool-icon-wrapper {
-  background: rgba(249, 115, 22, 0.1);
-  color: #F97316;
-}
-
-.tool-green .tool-icon-wrapper {
-  background: rgba(34, 197, 94, 0.1);
-  color: #22C55E;
-}
-
-.tool-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.tool-name {
-  font-size: 12px;
-  font-weight: 600;
-  color: #1F2937;
-  margin-bottom: 4px;
-}
-
-.tool-desc {
-  font-size: 11px;
-  color: #6B7280;
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* Agent Profile Card */
-.agent-profile-card {
-  border-bottom: 1px solid #E5E7EB;
-  background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
-}
-
-.profile-card-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 20px;
-}
-
-.profile-card-avatar {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  min-height: 44px;
-  background: linear-gradient(135deg, #1F2937 0%, #374151 100%);
-  color: #FFFFFF;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  font-weight: 600;
-  flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(31, 41, 55, 0.2);
-}
-
-.profile-card-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.profile-card-name {
-  font-size: 15px;
-  font-weight: 600;
-  color: #1F2937;
-  margin-bottom: 2px;
-}
-
-.profile-card-meta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: #6B7280;
-}
-
-.profile-card-handle {
-  color: #9CA3AF;
-}
-
-.profile-card-profession {
-  padding: 2px 8px;
-  background: #E5E7EB;
-  border-radius: 4px;
-  font-size: 11px;
-  font-weight: 500;
-}
-
-.profile-card-toggle {
-  width: 28px;
-  height: 28px;
-  background: #FFFFFF;
-  border: 1px solid #E5E7EB;
-  border-radius: 6px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #6B7280;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-}
-
-.profile-card-toggle:hover {
-  background: #F9FAFB;
-  border-color: #D1D5DB;
-}
-
-.profile-card-toggle svg {
-  transition: transform 0.3s ease;
-}
-
-.profile-card-toggle svg.is-expanded {
-  transform: rotate(180deg);
-}
-
-.profile-card-body {
-  padding: 0 20px 16px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.profile-card-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: #9CA3AF;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 6px;
-}
-
-.profile-card-bio {
-  background: #FFFFFF;
-  padding: 12px 14px;
-  border-radius: 8px;
-  border: 1px solid #E5E7EB;
-}
-
-.profile-card-bio p {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.6;
-  color: #4B5563;
-}
-
-/* Target Selector */
-.target-selector {
-  padding: 16px 24px;
-  border-bottom: 1px solid #E5E7EB;
-}
-
-.selector-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: #9CA3AF;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 10px;
-}
-
-.selector-options {
-  display: flex;
-  gap: 12px;
-}
-
-.target-option {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #374151;
-  background: #F9FAFB;
-  border: 1px solid #E5E7EB;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.target-option:hover {
-  border-color: #D1D5DB;
-}
-
-.target-option.active {
-  background: #1F2937;
-  color: #FFFFFF;
-  border-color: #1F2937;
-}
-
-/* Agent Dropdown */
-.agent-dropdown {
-  position: relative;
-}
-
-.dropdown-arrow {
-  margin-left: 4px;
-  transition: transform 0.2s ease;
-  opacity: 0.6;
-}
-
-.dropdown-arrow.open {
-  transform: rotate(180deg);
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 240px;
-  background: #FFFFFF;
-  border: 1px solid #E5E7EB;
-  border-radius: 12px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
-  max-height: 320px;
-  overflow-y: auto;
-  z-index: 100;
-}
-
-.dropdown-header {
-  padding: 12px 16px 8px;
-  font-size: 11px;
-  font-weight: 600;
-  color: #9CA3AF;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-bottom: 1px solid #F3F4F6;
-}
-
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  border-left: 3px solid transparent;
-}
-
-.dropdown-item:hover {
-  background: #F9FAFB;
-  border-left-color: #1F2937;
-}
-
-.dropdown-item:first-of-type {
-  margin-top: 4px;
-}
-
-.dropdown-item:last-child {
-  margin-bottom: 4px;
-}
-
-.agent-avatar {
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  min-height: 32px;
-  background: linear-gradient(135deg, #1F2937 0%, #374151 100%);
-  color: #FFFFFF;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 600;
-  flex-shrink: 0;
-  box-shadow: 0 2px 4px rgba(31, 41, 55, 0.1);
-}
-
-.agent-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  flex: 1;
-  min-width: 0;
-}
-
-.agent-name {
-  font-size: 13px;
-  font-weight: 600;
-  color: #1F2937;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.agent-role {
-  font-size: 11px;
-  color: #9CA3AF;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Chat Messages */
-.chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.chat-empty {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  color: #9CA3AF;
-}
-
-.empty-icon {
-  opacity: 0.3;
-}
-
-.empty-text {
-  font-size: 14px;
-  text-align: center;
-  max-width: 280px;
-  line-height: 1.6;
-}
-
-.chat-message {
-  display: flex;
-  gap: 12px;
-}
-
-.chat-message.user {
-  flex-direction: row-reverse;
-}
-
-.message-avatar {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  min-height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
-.chat-message.user .message-avatar {
-  background: #1F2937;
-  color: #FFFFFF;
-}
-
-.chat-message.assistant .message-avatar {
-  background: #F3F4F6;
-  color: #374151;
-}
-
-.message-content {
-  max-width: 70%;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.chat-message.user .message-content {
-  align-items: flex-end;
-}
-
-.message-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.chat-message.user .message-header {
-  flex-direction: row-reverse;
-}
-
-.sender-name {
-  font-size: 12px;
-  font-weight: 600;
-  color: #374151;
-}
-
-.message-time {
-  font-size: 11px;
-  color: #9CA3AF;
-}
-
-.message-text {
-  padding: 10px 14px;
-  border-radius: 12px;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.chat-message.user .message-text {
-  background: #1F2937;
-  color: #FFFFFF;
-  border-bottom-right-radius: 4px;
-}
-
-.chat-message.assistant .message-text {
-  background: #F3F4F6;
-  color: #374151;
-  border-bottom-left-radius: 4px;
-}
-
-.message-text :deep(.md-p) {
-  margin: 0;
-}
-
-.message-text :deep(.md-p:last-child) {
-  margin-bottom: 0;
-}
-
-/* 修复有序列表编号 - 使用 CSS 计数器让多个 ol 连续编号 */
 .message-text {
   counter-reset: list-counter;
 }
@@ -2057,7 +1031,7 @@ watch(() => props.simulationId, (newId) => {
   flex-shrink: 0;
 }
 
-/* 无序列表样式 */
+
 .message-text :deep(.md-ul) {
   padding-left: 20px;
   margin: 8px 0;
@@ -2067,476 +1041,7 @@ watch(() => props.simulationId, (newId) => {
   margin: 4px 0;
 }
 
-/* Typing Indicator */
-.typing-indicator {
-  display: flex;
-  gap: 4px;
-  padding: 10px 14px;
-  background: #F3F4F6;
-  border-radius: 12px;
-  border-bottom-left-radius: 4px;
-}
 
-.typing-indicator span {
-  width: 8px;
-  height: 8px;
-  background: #9CA3AF;
-  border-radius: 50%;
-  animation: typing 1.4s infinite ease-in-out;
-}
-
-.typing-indicator span:nth-child(1) { animation-delay: 0s; }
-.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes typing {
-  0%, 60%, 100% { transform: translateY(0); }
-  30% { transform: translateY(-8px); }
-}
-
-/* Chat Input */
-.chat-input-area {
-  padding: 16px 24px;
-  border-top: 1px solid #E5E7EB;
-  display: flex;
-  gap: 12px;
-  align-items: flex-end;
-}
-
-.chat-input {
-  flex: 1;
-  padding: 12px 16px;
-  font-size: 14px;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
-  resize: none;
-  font-family: inherit;
-  line-height: 1.5;
-  transition: border-color 0.2s ease;
-}
-
-.chat-input:focus {
-  outline: none;
-  border-color: #1F2937;
-}
-
-.chat-input:disabled {
-  background: #F9FAFB;
-  cursor: not-allowed;
-}
-
-.send-btn {
-  width: 44px;
-  height: 44px;
-  background: #1F2937;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s ease;
-}
-
-.send-btn:hover:not(:disabled) {
-  background: #374151;
-}
-
-.send-btn:disabled {
-  background: #E5E7EB;
-  color: #9CA3AF;
-  cursor: not-allowed;
-}
-
-/* Survey Container */
-.survey-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.survey-setup {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 24px;
-  border-bottom: 1px solid #E5E7EB;
-  overflow: hidden;
-}
-
-.setup-section {
-  margin-bottom: 24px;
-}
-
-.setup-section:first-child {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-height: 0;
-}
-
-.setup-section:last-child {
-  margin-bottom: 0;
-}
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.setup-section .section-header .section-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: #374151;
-}
-
-.selection-count {
-  font-size: 12px;
-  color: #9CA3AF;
-}
-
-/* Agents Grid */
-.agents-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
-  flex: 1;
-  overflow-y: auto;
-  padding: 4px;
-  align-content: start;
-}
-
-.agent-checkbox {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  background: #F9FAFB;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.agent-checkbox:hover {
-  border-color: #D1D5DB;
-}
-
-.agent-checkbox.checked {
-  background: #F0FDF4;
-  border-color: #10B981;
-}
-
-.agent-checkbox input {
-  display: none;
-}
-
-.checkbox-avatar {
-  width: 28px;
-  height: 28px;
-  min-width: 28px;
-  min-height: 28px;
-  background: #E5E7EB;
-  color: #374151;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
-.agent-checkbox.checked .checkbox-avatar {
-  background: #10B981;
-  color: #FFFFFF;
-}
-
-.checkbox-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.checkbox-name {
-  display: block;
-  font-size: 12px;
-  font-weight: 600;
-  color: #1F2937;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.checkbox-role {
-  display: block;
-  font-size: 10px;
-  color: #9CA3AF;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.checkbox-indicator {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #E5E7EB;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: all 0.2s ease;
-}
-
-.agent-checkbox.checked .checkbox-indicator {
-  background: #10B981;
-  border-color: #10B981;
-  color: #FFFFFF;
-}
-
-.checkbox-indicator svg {
-  opacity: 0;
-  transform: scale(0.5);
-  transition: all 0.2s ease;
-}
-
-.agent-checkbox.checked .checkbox-indicator svg {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.selection-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.action-link {
-  font-size: 12px;
-  color: #6B7280;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.action-link:hover {
-  color: #1F2937;
-  text-decoration: underline;
-}
-
-.action-divider {
-  color: #E5E7EB;
-}
-
-/* Survey Input */
-.survey-input {
-  width: 100%;
-  padding: 14px 16px;
-  font-size: 14px;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
-  resize: none;
-  font-family: inherit;
-  line-height: 1.5;
-  transition: border-color 0.2s ease;
-}
-
-.survey-input:focus {
-  outline: none;
-  border-color: #1F2937;
-}
-
-.survey-submit-btn {
-  width: 100%;
-  padding: 14px 24px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #FFFFFF;
-  background: #1F2937;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 20px;
-}
-
-.survey-submit-btn:hover:not(:disabled) {
-  background: #374151;
-}
-
-.survey-submit-btn:disabled {
-  background: #E5E7EB;
-  color: #9CA3AF;
-  cursor: not-allowed;
-}
-
-.loading-spinner {
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: #FFFFFF;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Survey Results */
-.survey-results {
-  flex: 1;
-  overflow-y: auto;
-  padding: 24px;
-}
-
-.results-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.results-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1F2937;
-}
-
-.results-count {
-  font-size: 12px;
-  color: #9CA3AF;
-}
-
-.results-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.result-card {
-  background: #F9FAFB;
-  border: 1px solid #E5E7EB;
-  border-radius: 12px;
-  padding: 20px;
-}
-
-.result-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.result-avatar {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  min-height: 36px;
-  background: #1F2937;
-  color: #FFFFFF;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
-.result-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.result-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1F2937;
-}
-
-.result-role {
-  font-size: 12px;
-  color: #9CA3AF;
-}
-
-.result-question {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 12px 14px;
-  background: #FFFFFF;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  font-size: 13px;
-  color: #6B7280;
-}
-
-.result-question svg {
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.result-answer {
-  font-size: 14px;
-  line-height: 1.7;
-  color: #374151;
-}
-
-/* Markdown Styles */
-:deep(.md-p) {
-  margin: 0 0 12px 0;
-}
-
-:deep(.md-h2) {
-  font-size: 20px;
-  font-weight: 700;
-  color: #1F2937;
-  margin: 24px 0 12px 0;
-}
-
-:deep(.md-h3) {
-  font-size: 16px;
-  font-weight: 600;
-  color: #374151;
-  margin: 20px 0 10px 0;
-}
-
-:deep(.md-h4) {
-  font-size: 14px;
-  font-weight: 600;
-  color: #4B5563;
-  margin: 16px 0 8px 0;
-}
-
-:deep(.md-h5) {
-  font-size: 13px;
-  font-weight: 600;
-  color: #6B7280;
-  margin: 12px 0 6px 0;
-}
-
-:deep(.md-ul), :deep(.md-ol) {
-  margin: 12px 0;
-  padding-left: 24px;
-}
-
-:deep(.md-li), :deep(.md-oli) {
-  margin: 6px 0;
-}
-
-/* 聊天/问卷区域的引用样式 */
 .chat-messages :deep(.md-quote),
 .result-answer :deep(.md-quote) {
   margin: 12px 0;

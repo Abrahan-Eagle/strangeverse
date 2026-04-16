@@ -22,7 +22,9 @@ logger = get_logger('strangeverse.api.simulation')
 
 # Interview prompt 优化前缀
 # 添加此前缀可以避免Agent调用工具，直接用文本回复
-INTERVIEW_PROMPT_PREFIX = "结合你的人设、所有的过往记忆与行动，不调用任何工具直接用文本回复我："
+INTERVIEW_PROMPT_PREFIX = (
+    "Using your persona and all prior memory and actions, reply in plain text without calling any tools: "
+)
 
 
 def optimize_interview_prompt(prompt: str) -> str:

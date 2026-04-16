@@ -2,9 +2,9 @@
 
 <img src="./static/image/strangeverse_logo_compressed.jpeg" alt="StrangeVerse Logo" width="75%"/>
 
-简洁通用的群体智能引擎，预测万物
+Concise & universal swarm intelligence — predict any scenario
 </br>
-<em>A Simple and Universal Swarm Intelligence Engine, Predicting Anything</em>
+<em>A simple and universal swarm intelligence engine</em>
 
 <a href="https://www.shanda.com/" target="_blank"><img src="./static/image/shanda_logo.png" alt="Shanda" height="40"/></a>
 
@@ -15,7 +15,7 @@
 
 [![Discord](https://img.shields.io/badge/Discord-Join-5865F2?style=flat-square&logo=discord&logoColor=white)](http://discord.gg/ePf5aPaHnA)
 
-[English](./README.md) | [中文文档](./README-ZH.md)
+[English](./README.md) | [Español](./README-ES.md)
 
 </div>
 
