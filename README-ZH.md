@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./static/image/MiroFish_logo_compressed.jpeg" alt="MiroFish Logo" width="75%"/>
+<img src="./static/image/MiroFish_logo_compressed.jpeg" alt="StrangeVerse Logo" width="75%"/>
 
 <a href="https://trendshift.io/repositories/16144" target="_blank"><img src="https://trendshift.io/api/badge/repositories/16144" alt="666ghj%2FMiroFish | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
@@ -8,7 +8,7 @@
 </br>
 <em>A Simple and Universal Swarm Intelligence Engine, Predicting Anything</em>
 
-<a href="https://www.shanda.com/" target="_blank"><img src="./static/image/shanda_logo.png" alt="666ghj%2MiroFish | Shanda" height="40"/></a>
+<a href="https://www.shanda.com/" target="_blank"><img src="./static/image/shanda_logo.png" alt="666ghj%2FMiroFish | Shanda" height="40"/></a>
 
 [![GitHub Stars](https://img.shields.io/github/stars/666ghj/MiroFish?style=flat-square&color=DAA520)](https://github.com/666ghj/MiroFish/stargazers)
 [![GitHub Watchers](https://img.shields.io/github/watchers/666ghj/MiroFish?style=flat-square)](https://github.com/666ghj/MiroFish/watchers)
@@ -26,14 +26,16 @@
 
 ## ⚡ 项目概述
 
-**MiroFish** 是一款基于多智能体技术的新一代 AI 预测引擎。通过提取现实世界的种子信息（如突发新闻、政策草案、金融信号），自动构建出高保真的平行数字世界。在此空间内，成千上万个具备独立人格、长期记忆与行为逻辑的智能体进行自由交互与社会演化。你可透过「上帝视角」动态注入变量，精准推演未来走向——**让未来在数字沙盘中预演，助决策在百战模拟后胜出**。
+**StrangeVerse** 基于上游 **[MiroFish](https://github.com/666ghj/MiroFish)**（AGPL-3.0）fork 并在此仓库中重命名与定制。页顶 GitHub 星标/关注等徽章指向**上游**仓库。
+
+**StrangeVerse** 是一款基于多智能体技术的新一代 AI 预测引擎。通过提取现实世界的种子信息（如突发新闻、政策草案、金融信号），自动构建出高保真的平行数字世界。在此空间内，成千上万个具备独立人格、长期记忆与行为逻辑的智能体进行自由交互与社会演化。你可透过「上帝视角」动态注入变量，精准推演未来走向——**让未来在数字沙盘中预演，助决策在百战模拟后胜出**。
 
 > 你只需：上传种子材料（数据分析报告或者有趣的小说故事），并用自然语言描述预测需求</br>
-> MiroFish 将返回：一份详尽的预测报告，以及一个可深度交互的高保真数字世界
+> StrangeVerse 将返回：一份详尽的预测报告，以及一个可深度交互的高保真数字世界
 
 ### 我们的愿景
 
-MiroFish 致力于打造映射现实的群体智能镜像，通过捕捉个体互动引发的群体涌现，突破传统预测的局限：
+StrangeVerse 致力于打造映射现实的群体智能镜像，通过捕捉个体互动引发的群体涌现，突破传统预测的局限：
 
 - **于宏观**：我们是决策者的预演实验室，让政策与公关在零风险中试错
 - **于微观**：我们是个人用户的创意沙盘，无论是推演小说结局还是探索脑洞，皆可有趣、好玩、触手可及
@@ -42,7 +44,7 @@ MiroFish 致力于打造映射现实的群体智能镜像，通过捕捉个体�
 
 ## 🌐 在线体验
 
-欢迎访问在线 Demo 演示环境，体验我们为你准备的一次关于热点舆情事件的推演预测：[mirofish-live-demo](https://666ghj.github.io/mirofish-demo/)
+欢迎访问在线 Demo 演示环境，体验我们为你准备的一次关于热点舆情事件的推演预测：[上游在线 Demo](https://666ghj.github.io/mirofish-demo/)（MiroFish）
 
 ## 📸 系统截图
 
@@ -65,10 +67,10 @@ MiroFish 致力于打造映射现实的群体智能镜像，通过捕捉个体�
 
 ## 🎬 演示视频
 
-### 1. 武汉大学舆情推演预测 + MiroFish项目讲解
+### 1. 武汉大学舆情推演预测 + StrangeVerse项目讲解
 
 <div align="center">
-<a href="https://www.bilibili.com/video/BV1VYBsBHEMY/" target="_blank"><img src="./static/image/武大模拟演示封面.png" alt="MiroFish Demo Video" width="75%"/></a>
+<a href="https://www.bilibili.com/video/BV1VYBsBHEMY/" target="_blank"><img src="./static/image/武大模拟演示封面.png" alt="StrangeVerse Demo Video" width="75%"/></a>
 
 点击图片查看使用微舆BettaFish生成的《武大舆情报告》进行预测的完整演示视频
 </div>
@@ -76,9 +78,9 @@ MiroFish 致力于打造映射现实的群体智能镜像，通过捕捉个体�
 ### 2. 《红楼梦》失传结局推演预测
 
 <div align="center">
-<a href="https://www.bilibili.com/video/BV1cPk3BBExq" target="_blank"><img src="./static/image/红楼梦模拟推演封面.jpg" alt="MiroFish Demo Video" width="75%"/></a>
+<a href="https://www.bilibili.com/video/BV1cPk3BBExq" target="_blank"><img src="./static/image/红楼梦模拟推演封面.jpg" alt="StrangeVerse Demo Video" width="75%"/></a>
 
-点击图片查看基于《红楼梦》前80回数十万字，MiroFish深度预测失传结局
+点击图片查看基于《红楼梦》前80回数十万字，StrangeVerse深度预测失传结局
 </div>
 
 > **金融方向推演预测**、**时政要闻推演预测**等示例陆续更新中...
@@ -184,13 +186,13 @@ docker compose up -d
 
 &nbsp;
 
-MiroFish团队长期招募全职/实习，如果你对多Agent应用感兴趣，欢迎投递简历至：**mirofish@shanda.com**
+上游 **MiroFish** 项目长期招募全职/实习，如果你对多Agent应用感兴趣，欢迎投递简历至：**mirofish@shanda.com**
 
 ## 📄 致谢
 
-**MiroFish 得到了盛大集团的战略支持和孵化！**
+**StrangeVerse 得到了盛大集团的战略支持和孵化！**
 
-MiroFish 的仿真引擎由 **[OASIS](https://github.com/camel-ai/oasis)** 驱动，我们衷心感谢 CAMEL-AI 团队的开源贡献！
+StrangeVerse 的仿真引擎由 **[OASIS](https://github.com/camel-ai/oasis)** 驱动，我们衷心感谢 CAMEL-AI 团队的开源贡献！
 
 ## 📈 项目统计
 

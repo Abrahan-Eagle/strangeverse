@@ -214,10 +214,11 @@ class OntologyGenerator:
         ]
         
         # 调用LLM
+        # Ontologia grande: subir max_tokens para evitar JSON truncado (Ollama/modelos locales)
         result = self.llm_client.chat_json(
             messages=messages,
             temperature=0.3,
-            max_tokens=4096
+            max_tokens=8192
         )
         
         # 验证和后处理
@@ -410,7 +411,7 @@ class OntologyGenerator:
         code_lines = [
             '"""',
             '自定义实体类型定义',
-            '由MiroFish自动生成，用于社会舆论模拟',
+            '由StrangeVerse自动生成，用于社会舆论模拟',
             '"""',
             '',
             'from pydantic import Field',

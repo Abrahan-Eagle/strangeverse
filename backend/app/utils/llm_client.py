@@ -4,11 +4,41 @@ LLM客户端封装
 """
 
 import json
+import logging
 import re
-from typing import Optional, Dict, Any, List
+from typing import Optional, Dict, Any, List, Union
 from openai import OpenAI
 
 from ..config import Config
+
+logger = logging.getLogger(__name__)
+
+
+def _first_json_object_from_text(text: str) -> Optional[Union[Dict[str, Any], List[Any]]]:
+    """
+    Algunos modelos locales (p. ej. Gemma via Ollama) devuelven prosa o JSON dentro de markdown
+    en lugar de un unico objeto JSON. Intenta extraer el primer objeto JSON valido.
+    """
+    if not text or not text.strip():
+        return None
+    text = text.strip()
+    # Bloque ```json ... ```
+    m = re.search(r"```(?:json)?\s*([\s\S]*?)\s*```", text, flags=re.IGNORECASE)
+    if m:
+        chunk = m.group(1).strip()
+        try:
+            return json.loads(chunk)
+        except json.JSONDecodeError:
+            pass
+    start = text.find("{")
+    if start == -1:
+        return None
+    decoder = json.JSONDecoder()
+    try:
+        obj, _ = decoder.raw_decode(text[start:])
+        return obj
+    except json.JSONDecodeError:
+        return None
 
 
 class LLMClient:
@@ -62,9 +92,14 @@ class LLMClient:
             kwargs["response_format"] = response_format
         
         response = self.client.chat.completions.create(**kwargs)
-        content = response.choices[0].message.content
-        # 部分模型（如MiniMax M2.5）会在content中包含<think>思考内容，需要移除
-        content = re.sub(r'<think>[\s\S]*?</think>', '', content).strip()
+        msg = response.choices[0].message
+        raw = msg.content if msg.content is not None else ""
+        if not str(raw).strip():
+            extra = getattr(msg, "model_extra", None) or {}
+            if isinstance(extra, dict) and extra.get("reasoning"):
+                raw = str(extra["reasoning"])
+        # 部分模型（如MiniMax M2.5）会在content中包含<redacted_thinking>思考内容，需要移除
+        content = re.sub(r'<redacted_thinking>[\s\S]*?</think>', '', str(raw)).strip()
         return content
     
     def chat_json(
@@ -99,5 +134,12 @@ class LLMClient:
         try:
             return json.loads(cleaned_response)
         except json.JSONDecodeError:
-            raise ValueError(f"LLM返回的JSON格式无效: {cleaned_response}")
+            pass
 
+        extracted = _first_json_object_from_text(cleaned_response)
+        if isinstance(extracted, dict):
+            logger.warning("chat_json: JSON parseado desde subcadena / markdown (modelo no devolvio solo JSON)")
+            return extracted
+
+        preview = (cleaned_response[:800] + "…") if len(cleaned_response) > 800 else cleaned_response
+        raise ValueError(f"LLM返回的JSON格式无效: {preview}")
