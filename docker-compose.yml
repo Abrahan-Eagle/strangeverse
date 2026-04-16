@@ -1,8 +1,8 @@
 services:
   strangeverse:
-    image: ghcr.io/666ghj/strangeverse:latest
+    image: ghcr.io/abrahan-eagle/strangeverse:latest
     # 加速镜像（如拉取缓慢可替换上方地址）
-    # image: ghcr.nju.edu.cn/666ghj/strangeverse:latest
+    # image: ghcr.nju.edu.cn/abrahan-eagle/strangeverse:latest
     container_name: strangeverse
     env_file:
       - .env

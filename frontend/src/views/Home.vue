@@ -5,7 +5,7 @@
       <div class="nav-brand">StrangeVerse</div>
       <div class="nav-links">
         <LanguageSwitcher />
-        <a href="https://github.com/666ghj/MiroFish" target="_blank" class="github-link" title="Proyecto original (MiroFish)">
+        <a href="https://github.com/Abrahan-Eagle/strangeverse" target="_blank" class="github-link" title="StrangeVerse en GitHub">
           {{ $t('nav.visitGithub') }} <span class="arrow">↗</span>
         </a>
       </div>
@@ -44,7 +44,7 @@
         <div class="hero-right">
           <!-- Logo 区域 -->
           <div class="logo-container">
-            <img src="../assets/logo/MiroFish_logo_left.jpeg" alt="StrangeVerse Logo" class="hero-logo" />
+            <img src="../assets/logo/strangeverse_logo_left.jpeg" alt="StrangeVerse Logo" class="hero-logo" />
           </div>
           
           <button class="scroll-down-btn" @click="scrollToBottom">

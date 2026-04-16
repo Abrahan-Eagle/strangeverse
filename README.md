@@ -1,32 +1,25 @@
 <div align="center">
 
-<img src="./static/image/MiroFish_logo_compressed.jpeg" alt="StrangeVerse Logo" width="75%"/>
-
-<a href="https://trendshift.io/repositories/16144" target="_blank"><img src="https://trendshift.io/api/badge/repositories/16144" alt="666ghj%2FMiroFish | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+<img src="./static/image/strangeverse_logo_compressed.jpeg" alt="StrangeVerse Logo" width="75%"/>
 
 简洁通用的群体智能引擎，预测万物
 </br>
 <em>A Simple and Universal Swarm Intelligence Engine, Predicting Anything</em>
 
-<a href="https://www.shanda.com/" target="_blank"><img src="./static/image/shanda_logo.png" alt="666ghj%2FMiroFish | Shanda" height="40"/></a>
+<a href="https://www.shanda.com/" target="_blank"><img src="./static/image/shanda_logo.png" alt="Shanda" height="40"/></a>
 
-[![GitHub Stars](https://img.shields.io/github/stars/666ghj/MiroFish?style=flat-square&color=DAA520)](https://github.com/666ghj/MiroFish/stargazers)
-[![GitHub Watchers](https://img.shields.io/github/watchers/666ghj/MiroFish?style=flat-square)](https://github.com/666ghj/MiroFish/watchers)
-[![GitHub Forks](https://img.shields.io/github/forks/666ghj/MiroFish?style=flat-square)](https://github.com/666ghj/MiroFish/network)
-[![Docker](https://img.shields.io/badge/Docker-Build-2496ED?style=flat-square&logo=docker&logoColor=white)](https://hub.docker.com/)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/666ghj/MiroFish)
+[![GitHub Stars](https://img.shields.io/github/stars/Abrahan-Eagle/strangeverse?style=flat-square&color=DAA520)](https://github.com/Abrahan-Eagle/strangeverse/stargazers)
+[![GitHub Watchers](https://img.shields.io/github/watchers/Abrahan-Eagle/strangeverse?style=flat-square)](https://github.com/Abrahan-Eagle/strangeverse/watchers)
+[![GitHub Forks](https://img.shields.io/github/forks/Abrahan-Eagle/strangeverse?style=flat-square)](https://github.com/Abrahan-Eagle/strangeverse/network)
+[![Docker](https://img.shields.io/badge/Docker-GHCR-2496ED?style=flat-square&logo=docker&logoColor=white)](https://github.com/Abrahan-Eagle/strangeverse/pkgs/container/strangeverse)
 
 [![Discord](https://img.shields.io/badge/Discord-Join-5865F2?style=flat-square&logo=discord&logoColor=white)](http://discord.gg/ePf5aPaHnA)
-[![X](https://img.shields.io/badge/X-Follow-000000?style=flat-square&logo=x&logoColor=white)](https://x.com/mirofish_ai)
-[![Instagram](https://img.shields.io/badge/Instagram-Follow-E4405F?style=flat-square&logo=instagram&logoColor=white)](https://www.instagram.com/mirofish_ai/)
 
 [English](./README.md) | [中文文档](./README-ZH.md)
 
 </div>
 
 ## ⚡ Overview
-
-**StrangeVerse** is a fork of **[MiroFish](https://github.com/666ghj/MiroFish)** (AGPL-3.0), renamed and customized in this repository. GitHub star/watch/fork badges above refer to the **upstream** project.
 
 **StrangeVerse** is a next-generation AI prediction engine powered by multi-agent technology. By extracting seed information from the real world (such as breaking news, policy drafts, or financial signals), it automatically constructs a high-fidelity parallel digital world. Within this space, thousands of intelligent agents with independent personalities, long-term memory, and behavioral logic freely interact and undergo social evolution. You can inject variables dynamically from a "God's-eye view" to precisely deduce future trajectories — **rehearse the future in a digital sandbox, and win decisions after countless simulations**.
 
@@ -44,7 +37,7 @@ From serious predictions to playful simulations, we let every "what if" see its 
 
 ## 🌐 Live Demo
 
-Welcome to visit our online demo environment and experience a prediction simulation on trending public opinion events we've prepared for you: [upstream live demo](https://666ghj.github.io/mirofish-demo/) (MiroFish)
+Run the stack locally (see **Quick Start** below) or with Docker for the full experience. A public hosted demo may be published later from this repository.
 
 ## 📸 Screenshots
 
@@ -186,7 +179,7 @@ Reads `.env` from root directory by default, maps ports `3000 (frontend) / 5001 
 
 &nbsp;
 
-The upstream **MiroFish** project recruits full-time/internship positions. If you're interested in multi-agent simulation and LLM applications, contact: **mirofish@shanda.com**
+Feedback and contributions are welcome via [GitHub Issues](https://github.com/Abrahan-Eagle/strangeverse/issues).
 
 ## 📄 Acknowledgments
 
@@ -196,10 +189,10 @@ StrangeVerse's simulation engine is powered by **[OASIS (Open Agent Social Inter
 
 ## 📈 Project Statistics
 
-<a href="https://www.star-history.com/#666ghj/MiroFish&type=date&legend=top-left">
+<a href="https://www.star-history.com/#Abrahan-Eagle/strangeverse&type=date&legend=top-left">
    <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=666ghj/MiroFish&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=666ghj/MiroFish&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=666ghj/MiroFish&type=date&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Abrahan-Eagle/strangeverse&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Abrahan-Eagle/strangeverse&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Abrahan-Eagle/strangeverse&type=date&legend=top-left" />
  </picture>
 </a>
